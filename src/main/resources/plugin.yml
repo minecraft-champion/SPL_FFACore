@@ -1,0 +1,11 @@
+name: FFACore
+version: '${version}'
+main: net.minecraftchampion.ffaCore.FFACore
+description: FFA Core plugin
+authors:
+  - Anhgelus
+  - Minecraft Champion
+commands:
+  set:
+    description: Setcommand
+    usage: Bad usage
