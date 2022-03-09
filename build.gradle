@@ -3,7 +3,7 @@ plugins {
 }
 
 group = 'net.minecraftchampion'
-version = '0.1.2-dev.5'
+version = '0.1.2-dev.6'
 
 repositories {
     mavenCentral()

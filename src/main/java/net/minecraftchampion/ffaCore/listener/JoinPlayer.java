@@ -12,6 +12,9 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.PlayerInventory;
+import org.bukkit.potion.PotionEffect;
+
+import java.util.Collection;
 
 public class JoinPlayer implements Listener {
 
@@ -26,7 +29,8 @@ public class JoinPlayer implements Listener {
     @EventHandler(priority = EventPriority.NORMAL)
     public void onPlayerJoin(PlayerJoinEvent e) {
         final Player player = e.getPlayer();
-        player.setGameMode(GameMode.ADVENTURE);
+        resetPlayer(player);
+
         final Location coords = this.locationManager.getLocation(ConfigManager.SPAWN, player.getWorld());
         player.teleport(coords);
 
@@ -34,5 +38,17 @@ public class JoinPlayer implements Listener {
 
         final KitManager kitManager = new KitManager(this.config, pInventory);
         kitManager.giveKit();
+    }
+
+    private void resetPlayer(Player player) {
+        player.setGameMode(GameMode.ADVENTURE);
+        player.getInventory().clear();
+        player.setHealth(20);
+
+        final Collection<PotionEffect> effects = player.getActivePotionEffects();
+
+        if (effects == null) return;
+
+        effects.forEach(effect -> player.removePotionEffect(effect.getType()));
     }
 }
