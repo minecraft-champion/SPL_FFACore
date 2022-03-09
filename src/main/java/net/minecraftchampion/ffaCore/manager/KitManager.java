@@ -5,6 +5,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
+import org.bukkit.inventory.meta.ItemMeta;
 
 public class KitManager {
 
@@ -55,14 +56,20 @@ public class KitManager {
         }
 
         final ItemStack item = new ItemStack(Material.getMaterial(itemName));
+
         final int enchantmentSharpness = this.config.getInt(path + SHARPNESS_LEVEL_PATH);
         final int enchantmentProtection = this.config.getInt(path + PROTECTION_LEVEL_PATH);
+
         if (enchantmentSharpness != 0) {
             item.addEnchantment(Enchantment.DAMAGE_ALL, enchantmentSharpness);
         }
         if (enchantmentProtection != 0) {
             item.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, enchantmentProtection);
         }
+
+        final ItemMeta itemMeta = item.getItemMeta();
+        itemMeta.spigot().setUnbreakable(true);
+        item.setItemMeta(itemMeta);
 
         return item;
     }
