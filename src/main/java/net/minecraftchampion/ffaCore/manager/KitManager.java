@@ -17,7 +17,8 @@ public class KitManager {
     public static final String SWORD_PATH = "sword.";
     public static final String SHARPNESS_LEVEL_PATH = "sharpness";
     public static final String ITEM_PATH = "item";
-
+    public static final String KILL_REWARD_PATH = "kill-reward.";
+    public static final String QUANTITY_PATH = "quantity";
     private final YamlConfiguration config;
     private final PlayerInventory pInv;
 

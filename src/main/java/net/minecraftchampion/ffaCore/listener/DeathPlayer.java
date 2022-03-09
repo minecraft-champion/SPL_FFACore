@@ -4,6 +4,7 @@ import net.minecraftchampion.ffaCore.manager.ConfigManager;
 import net.minecraftchampion.ffaCore.manager.KitManager;
 import net.minecraftchampion.ffaCore.manager.LocationManager;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -11,6 +12,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
+import org.bukkit.inventory.ItemStack;
 
 public class DeathPlayer implements Listener {
 
@@ -26,6 +28,9 @@ public class DeathPlayer implements Listener {
     public void onPlayerDeath(PlayerDeathEvent e) {
         // remove drops
         e.getDrops().removeAll(e.getDrops());
+
+        final Player player = e.getEntity().getKiller();
+        onKill(player);
     }
 
     @EventHandler(priority = EventPriority.HIGH)
@@ -37,5 +42,13 @@ public class DeathPlayer implements Listener {
 
         final KitManager kitManager = new KitManager(this.config, player.getInventory());
         kitManager.giveKit();
+    }
+
+    public void onKill(Player player) {
+        final String key = KitManager.KILL_REWARD_PATH;
+        final ItemStack item = new ItemStack(Material.getMaterial(this.config.getString(key + KitManager.ITEM_PATH)));
+        item.setAmount(this.config.getInt(key + KitManager.QUANTITY_PATH));
+
+        player.getInventory().addItem(item);
     }
 }

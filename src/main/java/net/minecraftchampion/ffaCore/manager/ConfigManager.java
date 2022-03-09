@@ -8,7 +8,7 @@ import java.util.Objects;
 
 public class ConfigManager {
 
-    public static final String VERSION = "0.0 #DO NOT CHANGE THIS";
+    public static final String VERSION = "0.1 #DO NOT CHANGE THIS";
     public static final String VERSION_PATH = "version";
     public static final String OUTDATED = "outdated";
     public static final String SPAWN = "spawn.";
@@ -103,6 +103,10 @@ public class ConfigManager {
         key = KitManager.DEFAULT_KIT_PATH + KitManager.SWORD_PATH;
         this.kit.set(key + KitManager.ITEM_PATH, "STONE_SWORD");
         this.kit.set(key + KitManager.SHARPNESS_LEVEL_PATH, 1);
+
+        key = KitManager.KILL_REWARD_PATH;
+        this.kit.set(key + KitManager.ITEM_PATH, "GOLDEN_APPLE");
+        this.kit.set(key + KitManager.QUANTITY_PATH, 1);
     }
 
 }
