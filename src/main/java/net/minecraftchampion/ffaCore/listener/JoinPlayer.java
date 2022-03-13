@@ -3,6 +3,7 @@ package net.minecraftchampion.ffaCore.listener;
 import net.minecraftchampion.ffaCore.manager.ConfigManager;
 import net.minecraftchampion.ffaCore.manager.KitManager;
 import net.minecraftchampion.ffaCore.manager.LocationManager;
+import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -32,7 +33,12 @@ public class JoinPlayer implements Listener {
         resetPlayer(player);
 
         final Location coords = this.locationManager.getLocation(ConfigManager.SPAWN, player.getWorld());
-        player.teleport(coords);
+
+        if (coords.getBlockY() == 0) {
+            player.teleport(new Location(Bukkit.getWorld("world"), 4, 0, 0));
+        } else {
+            player.teleport(coords);
+        }
 
         final PlayerInventory pInventory = player.getInventory();
 
