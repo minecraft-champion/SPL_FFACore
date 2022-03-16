@@ -1,6 +1,5 @@
 package net.minecraftchampion.ffaCore.manager;
 
-import net.minecraftchampion.ffaCore.FFACore;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.enchantments.Enchantment;
@@ -40,20 +39,20 @@ public class KitManager {
         final boolean bowEnabled = this.config.getBoolean(DEFAULT_KIT_PATH + BOW_PATH + ENABLED_PATH);
 
         /* Armor */
-        pInv.setHelmet(loadItemStack(DEFAULT_KIT_PATH + HELMET_PATH));
-        pInv.setChestplate(loadItemStack(DEFAULT_KIT_PATH + CHESTPLATE_PATH));
-        pInv.setLeggings(loadItemStack(DEFAULT_KIT_PATH + LEGGINGS_PATH));
-        pInv.setBoots(loadItemStack(DEFAULT_KIT_PATH + BOOTS_PATH));
+        this.pInv.setHelmet(loadItemStack(DEFAULT_KIT_PATH + HELMET_PATH));
+        this.pInv.setChestplate(loadItemStack(DEFAULT_KIT_PATH + CHESTPLATE_PATH));
+        this.pInv.setLeggings(loadItemStack(DEFAULT_KIT_PATH + LEGGINGS_PATH));
+        this.pInv.setBoots(loadItemStack(DEFAULT_KIT_PATH + BOOTS_PATH));
         /* Damage */
-        pInv.setItem(0, loadItemStack(DEFAULT_KIT_PATH + SWORD_PATH));
+        this.pInv.setItem(0, loadItemStack(DEFAULT_KIT_PATH + SWORD_PATH));
         if (bowEnabled) {
-            pInv.setItem(1, loadItemStack(DEFAULT_KIT_PATH + BOW_PATH));
-            pInv.setItem(2, loadItemStack(DEFAULT_KIT_PATH + BOW_PATH + ARROW_PATH));
+            this.pInv.setItem(1, loadItemStack(DEFAULT_KIT_PATH + BOW_PATH));
+            this.pInv.setItem(2, loadItemStack(DEFAULT_KIT_PATH + BOW_PATH + ARROW_PATH));
         }
         final ItemStack beef = new ItemStack(Material.COOKED_BEEF);
         beef.setAmount(64);
 
-        pInv.setItem(8, beef);
+        this.pInv.setItem(8, beef);
     }
 
     /**

@@ -57,7 +57,7 @@ public class ConfigManager {
 
     public YamlConfiguration loadKit() {
         final boolean outdated = this.kit.getBoolean(OUTDATED);
-        if (!outdated) {
+        if (outdated) {
             generateNewKit();
             this.data.save(this.kit, this.kitFile);
             ChatManager.sendConsoleMessage("The kit configuration has been created");
