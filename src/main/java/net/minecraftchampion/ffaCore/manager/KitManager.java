@@ -1,5 +1,6 @@
 package net.minecraftchampion.ffaCore.manager;
 
+import net.minecraftchampion.ffaCore.FFACore;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.enchantments.Enchantment;
@@ -20,6 +21,10 @@ public class KitManager {
     public static final String ITEM_PATH = "item";
     public static final String KILL_REWARD_PATH = "kill-reward.";
     public static final String QUANTITY_PATH = "quantity";
+    public static final String BOW_PATH = "bow.";
+    public static final String ENABLED_PATH = "enabled";
+    public static final String ARROW_PATH = "arrow.";
+
     private final YamlConfiguration config;
     private final PlayerInventory pInv;
 
@@ -32,12 +37,19 @@ public class KitManager {
      * Give the kit to the players
      */
     public void giveKit() {
+        final boolean bowEnabled = this.config.getBoolean(DEFAULT_KIT_PATH + BOW_PATH + ENABLED_PATH);
+
+        /* Armor */
         pInv.setHelmet(loadItemStack(DEFAULT_KIT_PATH + HELMET_PATH));
         pInv.setChestplate(loadItemStack(DEFAULT_KIT_PATH + CHESTPLATE_PATH));
         pInv.setLeggings(loadItemStack(DEFAULT_KIT_PATH + LEGGINGS_PATH));
         pInv.setBoots(loadItemStack(DEFAULT_KIT_PATH + BOOTS_PATH));
+        /* Damage */
         pInv.setItem(0, loadItemStack(DEFAULT_KIT_PATH + SWORD_PATH));
-
+        if (bowEnabled) {
+            pInv.setItem(1, loadItemStack(DEFAULT_KIT_PATH + BOW_PATH));
+            pInv.setItem(2, loadItemStack(DEFAULT_KIT_PATH + BOW_PATH + ARROW_PATH));
+        }
         final ItemStack beef = new ItemStack(Material.COOKED_BEEF);
         beef.setAmount(64);
 
@@ -51,9 +63,7 @@ public class KitManager {
      */
     private ItemStack loadItemStack(String path) {
         final String itemName = this.config.getString(path + ITEM_PATH);
-        if (itemName == null) {
-            return null;
-        }
+        if (itemName == null) return null;
 
         final ItemStack item = new ItemStack(Material.getMaterial(itemName));
 
@@ -67,7 +77,13 @@ public class KitManager {
             item.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, enchantmentProtection);
         }
 
+        if (item.isSimilar(new ItemStack(Material.ARROW))) {
+            final int quantity = this.config.getInt(path + QUANTITY_PATH);
+            item.setAmount(quantity);
+        }
+
         final ItemMeta itemMeta = item.getItemMeta();
+
         itemMeta.spigot().setUnbreakable(true);
         item.setItemMeta(itemMeta);
 

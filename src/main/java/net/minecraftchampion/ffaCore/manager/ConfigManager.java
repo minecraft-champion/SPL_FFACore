@@ -8,7 +8,7 @@ import java.util.Objects;
 
 public class ConfigManager {
 
-    public static final String VERSION = "0.1 #DO NOT CHANGE THIS";
+    public static final String VERSION = "0.2 #DO NOT CHANGE THIS";
     public static final String VERSION_PATH = "version";
     public static final String OUTDATED = "outdated";
     public static final String SPAWN = "spawn.";
@@ -84,29 +84,42 @@ public class ConfigManager {
     private void generateNewKit() {
         this.kit.set(OUTDATED, false);
 
-        String key = KitManager.DEFAULT_KIT_PATH + KitManager.HELMET_PATH;
+        String key = KitManager.DEFAULT_KIT_PATH + KitManager.HELMET_PATH; // default.helmet
         this.kit.set(key + KitManager.ITEM_PATH, "IRON_HELMET");
         this.kit.set(key + KitManager.PROTECTION_LEVEL_PATH, 1);
 
-        key = KitManager.DEFAULT_KIT_PATH + KitManager.CHESTPLATE_PATH;
+        key = KitManager.DEFAULT_KIT_PATH + KitManager.CHESTPLATE_PATH; // default.chestplate
         this.kit.set(key + KitManager.ITEM_PATH, "IRON_CHESTPLATE");
         this.kit.set(key + KitManager.PROTECTION_LEVEL_PATH, 1);
 
-        key = KitManager.DEFAULT_KIT_PATH + KitManager.LEGGINGS_PATH;
+        key = KitManager.DEFAULT_KIT_PATH + KitManager.LEGGINGS_PATH; // default.leggings
         this.kit.set(key + KitManager.ITEM_PATH, "IRON_LEGGINGS");
         this.kit.set(key + KitManager.PROTECTION_LEVEL_PATH, 1);
 
-        key = KitManager.DEFAULT_KIT_PATH + KitManager.BOOTS_PATH;
+        key = KitManager.DEFAULT_KIT_PATH + KitManager.BOOTS_PATH; // default.boots
         this.kit.set(key + KitManager.ITEM_PATH, "IRON_BOOTS");
         this.kit.set(key + KitManager.PROTECTION_LEVEL_PATH, 1);
 
-        key = KitManager.DEFAULT_KIT_PATH + KitManager.SWORD_PATH;
+        key = KitManager.DEFAULT_KIT_PATH + KitManager.SWORD_PATH; // default.sword
         this.kit.set(key + KitManager.ITEM_PATH, "STONE_SWORD");
         this.kit.set(key + KitManager.SHARPNESS_LEVEL_PATH, 1);
 
-        key = KitManager.KILL_REWARD_PATH;
+        key = KitManager.DEFAULT_KIT_PATH + KitManager.BOW_PATH; // default.bow
+        this.kit.set(key + KitManager.ITEM_PATH, "BOW");
+        this.kit.set(key + KitManager.ENABLED_PATH, true);
+
+        key = KitManager.DEFAULT_KIT_PATH + KitManager.BOW_PATH + KitManager.ARROW_PATH; // default.bow.arrow
+        this.kit.set(key + KitManager.ITEM_PATH, "ARROW");
+        this.kit.set(key + KitManager.QUANTITY_PATH, 3);
+
+        key = KitManager.KILL_REWARD_PATH; // reward
         this.kit.set(key + KitManager.ITEM_PATH, "GOLDEN_APPLE");
         this.kit.set(key + KitManager.QUANTITY_PATH, 1);
+
+        key = KitManager.KILL_REWARD_PATH + KitManager.ARROW_PATH; // reward.arrow
+        this.kit.set(key + KitManager.ITEM_PATH, "ARROW");
+        this.kit.set(key + KitManager.QUANTITY_PATH, 3);
+        this.kit.set(key + KitManager.ENABLED_PATH, true);
     }
 
 }

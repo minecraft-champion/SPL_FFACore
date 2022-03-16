@@ -6,12 +6,14 @@ import net.minecraftchampion.ffaCore.manager.LocationManager;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 public class DeathPlayer implements Listener {
@@ -45,10 +47,24 @@ public class DeathPlayer implements Listener {
     }
 
     public void onKill(Player player) {
-        final String key = KitManager.KILL_REWARD_PATH;
+
+        String key = KitManager.KILL_REWARD_PATH;
+
+        final boolean enabledArrow = this.config.getBoolean(key + KitManager.ARROW_PATH + KitManager.ENABLED_PATH);
+        final Inventory inv = player.getInventory();
+
         final ItemStack item = new ItemStack(Material.getMaterial(this.config.getString(key + KitManager.ITEM_PATH)));
         item.setAmount(this.config.getInt(key + KitManager.QUANTITY_PATH));
 
-        player.getInventory().addItem(item);
+        if (enabledArrow) {
+            key = key + KitManager.ARROW_PATH;
+
+            final ItemStack arrow = new ItemStack(Material.getMaterial(this.config.getString(key + KitManager.ITEM_PATH)));
+
+            item.setAmount(this.config.getInt(key + KitManager.QUANTITY_PATH));
+            inv.addItem(arrow);
+        }
+
+        inv.addItem(item);
     }
 }
