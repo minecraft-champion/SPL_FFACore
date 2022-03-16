@@ -35,7 +35,7 @@ public class JoinPlayer implements Listener {
         final Location coords = this.locationManager.getLocation(ConfigManager.SPAWN, player.getWorld());
 
         if (coords.getBlockY() == 0) {
-            player.teleport(new Location(Bukkit.getWorld("world"), 4, 0, 0));
+            player.teleport(new Location(Bukkit.getWorld("world"), 4, 4, 0));
         } else {
             player.teleport(coords);
         }
