@@ -48,7 +48,6 @@ public class DeathPlayer implements Listener {
     }
 
     public void onKill(Player player) {
-
         String key = KitManager.KILL_REWARD_PATH;
 
         final boolean enabledArrow = this.config.getBoolean(key + KitManager.ARROW_PATH + KitManager.ENABLED_PATH);
@@ -62,7 +61,7 @@ public class DeathPlayer implements Listener {
 
             final ItemStack arrow = new ItemStack(Material.getMaterial(this.config.getString(key + KitManager.ITEM_PATH)));
 
-            item.setAmount(this.config.getInt(key + KitManager.QUANTITY_PATH));
+            arrow.setAmount(this.config.getInt(key + KitManager.QUANTITY_PATH));
             inv.addItem(arrow);
         }
 

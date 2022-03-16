@@ -80,12 +80,12 @@ public class KitManager {
         if (item.isSimilar(new ItemStack(Material.ARROW))) {
             final int quantity = this.config.getInt(path + QUANTITY_PATH);
             item.setAmount(quantity);
+        } else {
+            final ItemMeta itemMeta = item.getItemMeta();
+
+            itemMeta.spigot().setUnbreakable(true);
+            item.setItemMeta(itemMeta);
         }
-
-        final ItemMeta itemMeta = item.getItemMeta();
-
-        itemMeta.spigot().setUnbreakable(true);
-        item.setItemMeta(itemMeta);
 
         return item;
     }

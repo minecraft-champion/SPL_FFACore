@@ -7,13 +7,11 @@ import net.minecraftchampion.ffaCore.listener.JoinPlayer;
 import net.minecraftchampion.ffaCore.manager.ConfigManager;
 import net.minecraftchampion.ffaCore.manager.FileManager;
 import org.bukkit.Bukkit;
-import org.bukkit.GameMode;
 import org.bukkit.World;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.io.File;
 import java.util.logging.Logger;
 
 public final class FFACore extends JavaPlugin {
