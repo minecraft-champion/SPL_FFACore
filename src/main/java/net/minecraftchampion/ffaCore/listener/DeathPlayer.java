@@ -31,8 +31,9 @@ public class DeathPlayer implements Listener {
         // remove drops
         e.getDrops().removeAll(e.getDrops());
 
-        final Player player = e.getEntity().getKiller();
-        onKill(player);
+        final Player killer = e.getEntity().getKiller();
+        if (killer == null) return;
+        onKill(killer);
     }
 
     @EventHandler(priority = EventPriority.HIGH)
