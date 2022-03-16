@@ -1,6 +1,7 @@
 package net.minecraftchampion.ffaCore;
 
 import net.minecraftchampion.ffaCore.command.set.SetCommand;
+import net.minecraftchampion.ffaCore.listener.BowEvent;
 import net.minecraftchampion.ffaCore.listener.DamagePlayer;
 import net.minecraftchampion.ffaCore.listener.DeathPlayer;
 import net.minecraftchampion.ffaCore.listener.JoinPlayer;
@@ -44,6 +45,7 @@ public final class FFACore extends JavaPlugin {
         pluginManager.registerEvents(new JoinPlayer(kit, config), this);
         pluginManager.registerEvents(new DeathPlayer(kit, config), this);
         pluginManager.registerEvents(new DamagePlayer(config), this);
+        pluginManager.registerEvents(new BowEvent(config), this);
 
         getCommand("set").setExecutor(new SetCommand(config, FileManager.getConfig(this)));
     }

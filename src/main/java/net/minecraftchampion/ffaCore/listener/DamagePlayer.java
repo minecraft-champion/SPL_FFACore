@@ -20,7 +20,7 @@ public class DamagePlayer implements Listener {
     @EventHandler(priority = EventPriority.NORMAL)
     public void EntityDamageEvent(EntityDamageEvent event){
         final Entity e = event.getEntity();
-        final double y = config.getDouble(ConfigManager.SPAWN + "y");
+        final double y = this.config.getDouble(ConfigManager.SPAWN + "y");
 
         if (!(e instanceof Player) || y == 0) {
             return;
