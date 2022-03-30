@@ -26,11 +26,12 @@ public class BowEvent implements Listener {
 
     @EventHandler(priority = EventPriority.NORMAL)
     public void onShootBow(EntityShootBowEvent e) {
+        // check if the player is not dead
         final LivingEntity player = e.getEntity();
         if (player == null) return;
 
+        // delete arrow if the player is in the spawn
         final double y = this.config.getDouble(ConfigManager.SPAWN + "y");
-
 
         if (player.getLocation().getBlockY() >= y - 1) {
             e.getProjectile().remove();
@@ -39,12 +40,19 @@ public class BowEvent implements Listener {
 
     @EventHandler(priority = EventPriority.LOW)
     public void onProjectileHit(ProjectileHitEvent e) {
+        // delete if it's an arrow
         final Projectile arrow = e.getEntity();
         if (!(arrow instanceof Arrow)) return;
-        FFACore.LOGGER.info("delete");
         arrow.remove();
     }
 
+    /**
+     * Get coords with a vector
+     *
+     * @param loc base location
+     * @param vec vector
+     * @return Location
+     */
     private Location getNewCoords(Location loc, Vector vec) {
         return new Location(loc.getWorld(), loc.getX()+vec.getX(), loc.getY()+vec.getY(), loc.getZ()+vec.getZ());
     }

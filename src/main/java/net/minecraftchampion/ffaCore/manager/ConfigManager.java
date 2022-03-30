@@ -35,21 +35,21 @@ public class ConfigManager {
      * @return Main configuration
      */
     public YamlConfiguration load() {
-        final String version = this.yml.getString(VERSION_PATH);
+        final String version = this.yml.getString(VERSION_PATH); // get the version in the file
 
         if (!Objects.equals(version, VERSION)) {
             final boolean outdated = this.yml.getBoolean(OUTDATED);
-            if (version == null || outdated) {
+            if (version == null || outdated) { // generate a new config if the config do not exist or if the config is outdated
                 generateNewConfig();
                 this.data.save(this.yml, this.config);
 
                 ChatManager.sendConsoleMessage("The configuration has been created");
-            } else {
+            } else { // set the config outdated
                 this.yml.set(OUTDATED, true);
                 this.data.save(this.yml, this.config);
                 ChatManager.sendWarnMessage("The configuration file is outdated! At the next loading, this file will be deleted!");
             }
-        } else {
+        } else { // load the config
             ChatManager.sendConsoleMessage("The configuration has been loaded");
         }
         return this.yml;
@@ -57,11 +57,11 @@ public class ConfigManager {
 
     public YamlConfiguration loadKit() {
         final boolean outdated = this.kit.getBoolean(OUTDATED);
-        if (outdated) {
+        if (outdated) { // if the file is outdated generate a new config
             generateNewKit();
             this.data.save(this.kit, this.kitFile);
             ChatManager.sendConsoleMessage("The kit configuration has been created");
-        } else {
+        } else { // load the config
             ChatManager.sendConsoleMessage("The kit configuration has been loaded");
         }
         return this.kit;
@@ -81,6 +81,9 @@ public class ConfigManager {
         this.yml.set(SPAWN + "pitch", 0);
     }
 
+    /**
+     * Generate the new kit config
+     */
     private void generateNewKit() {
         this.kit.set(OUTDATED, false);
 

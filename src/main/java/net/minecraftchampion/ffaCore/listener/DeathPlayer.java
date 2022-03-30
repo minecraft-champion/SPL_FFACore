@@ -6,7 +6,6 @@ import net.minecraftchampion.ffaCore.manager.LocationManager;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -32,17 +31,19 @@ public class DeathPlayer implements Listener {
         e.getDrops().removeAll(e.getDrops());
 
         final Player killer = e.getEntity().getKiller();
-        if (killer == null) return;
-        onKill(killer);
+        if (killer == null) return; // check if the player exist
+        onKill(killer); // give the rewards of the kill
     }
 
     @EventHandler(priority = EventPriority.HIGH)
     public void onPlayerRespawn(PlayerRespawnEvent e) {
         final Player player = e.getPlayer();
 
+        // respawn the player at the right location
         final Location coords = this.locationManager.getLocation(ConfigManager.SPAWN, player.getWorld());
         e.setRespawnLocation(coords);
 
+        // give the kit at the player
         final KitManager kitManager = new KitManager(this.config, player.getInventory());
         kitManager.giveKit();
     }
@@ -53,10 +54,12 @@ public class DeathPlayer implements Listener {
         final boolean enabledArrow = this.config.getBoolean(key + KitManager.ARROW_PATH + KitManager.ENABLED_PATH);
         final Inventory inv = player.getInventory();
 
+        // give the reward (item)
         final ItemStack item = new ItemStack(Material.getMaterial(this.config.getString(key + KitManager.ITEM_PATH)));
         item.setAmount(this.config.getInt(key + KitManager.QUANTITY_PATH));
 
-        if (enabledArrow) {
+        if (enabledArrow) { // if the bow is enabled
+            // give the arrow for the reward
             key = key + KitManager.ARROW_PATH;
 
             final ItemStack arrow = new ItemStack(Material.getMaterial(this.config.getString(key + KitManager.ITEM_PATH)));

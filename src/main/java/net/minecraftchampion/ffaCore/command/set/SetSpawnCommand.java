@@ -32,6 +32,7 @@ public class SetSpawnCommand {
     public void setSpawn(CommandSender sender, String[] args) {
         if (args.length == 1) {
             if (Objects.equals(args[0], "spawn")) {
+                // set the location of the spawn
                 final Location coords = ((Player) sender).getLocation();
                 this.locationManager.setLocation(ConfigManager.SPAWN, coords.getX(), coords.getY(), coords.getZ(), coords.getYaw(), coords.getPitch(), file);
                 sender.sendMessage(ChatColor.GREEN + "You have perfectly set the spawn");

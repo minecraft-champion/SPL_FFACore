@@ -29,17 +29,20 @@ public class JoinPlayer implements Listener {
 
     @EventHandler(priority = EventPriority.NORMAL)
     public void onPlayerJoin(PlayerJoinEvent e) {
+        // reset the player
         final Player player = e.getPlayer();
         resetPlayer(player);
 
         final Location coords = this.locationManager.getLocation(ConfigManager.SPAWN, player.getWorld());
 
-        if (coords.getBlockY() == 0) {
+        // teleport the player at the right location
+        if (coords.getBlockY() == 0) { // detect if the player is falling into the void
             player.teleport(new Location(Bukkit.getWorld("world"), 4, 4, 0));
         } else {
             player.teleport(coords);
         }
 
+        // give the kit to the player
         final PlayerInventory pInventory = player.getInventory();
 
         final KitManager kitManager = new KitManager(this.config, pInventory);
@@ -47,12 +50,14 @@ public class JoinPlayer implements Listener {
     }
 
     private void resetPlayer(Player player) {
+        // reset the player
         player.setGameMode(GameMode.ADVENTURE);
         player.getInventory().clear();
         player.setHealth(20);
 
         final Collection<PotionEffect> effects = player.getActivePotionEffects();
 
+        // reset the effect
         if (effects == null) return;
 
         effects.forEach(effect -> player.removePotionEffect(effect.getType()));

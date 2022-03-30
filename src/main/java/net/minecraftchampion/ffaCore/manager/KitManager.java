@@ -38,17 +38,19 @@ public class KitManager {
     public void giveKit() {
         final boolean bowEnabled = this.config.getBoolean(DEFAULT_KIT_PATH + BOW_PATH + ENABLED_PATH);
 
-        /* Armor */
+        // Armor
         this.pInv.setHelmet(loadItemStack(DEFAULT_KIT_PATH + HELMET_PATH));
         this.pInv.setChestplate(loadItemStack(DEFAULT_KIT_PATH + CHESTPLATE_PATH));
         this.pInv.setLeggings(loadItemStack(DEFAULT_KIT_PATH + LEGGINGS_PATH));
         this.pInv.setBoots(loadItemStack(DEFAULT_KIT_PATH + BOOTS_PATH));
-        /* Damage */
+        // Damage
         this.pInv.setItem(0, loadItemStack(DEFAULT_KIT_PATH + SWORD_PATH));
+        // bow
         if (bowEnabled) {
             this.pInv.setItem(1, loadItemStack(DEFAULT_KIT_PATH + BOW_PATH));
             this.pInv.setItem(2, loadItemStack(DEFAULT_KIT_PATH + BOW_PATH + ARROW_PATH));
         }
+        // food
         final ItemStack beef = new ItemStack(Material.COOKED_BEEF);
         beef.setAmount(64);
 
@@ -56,18 +58,21 @@ public class KitManager {
     }
 
     /**
+     * Get the item in the config
      *
-     * @param path path
+     * @param key key to the item
      * @return Item
      */
-    private ItemStack loadItemStack(String path) {
-        final String itemName = this.config.getString(path + ITEM_PATH);
+    private ItemStack loadItemStack(String key) {
+        // get the item
+        final String itemName = this.config.getString(key + ITEM_PATH);
         if (itemName == null) return null;
 
         final ItemStack item = new ItemStack(Material.getMaterial(itemName));
 
-        final int enchantmentSharpness = this.config.getInt(path + SHARPNESS_LEVEL_PATH);
-        final int enchantmentProtection = this.config.getInt(path + PROTECTION_LEVEL_PATH);
+        // enchant the item
+        final int enchantmentSharpness = this.config.getInt(key + SHARPNESS_LEVEL_PATH);
+        final int enchantmentProtection = this.config.getInt(key + PROTECTION_LEVEL_PATH);
 
         if (enchantmentSharpness != 0) {
             item.addEnchantment(Enchantment.DAMAGE_ALL, enchantmentSharpness);
@@ -76,8 +81,9 @@ public class KitManager {
             item.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, enchantmentProtection);
         }
 
+        // set unbreakable if it's not an arrow
         if (item.isSimilar(new ItemStack(Material.ARROW))) {
-            final int quantity = this.config.getInt(path + QUANTITY_PATH);
+            final int quantity = this.config.getInt(key + QUANTITY_PATH);
             item.setAmount(quantity);
         } else {
             final ItemMeta itemMeta = item.getItemMeta();
